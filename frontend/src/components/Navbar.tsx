@@ -35,41 +35,41 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 fixed w-full top-0 z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+    <nav className="sticky top-0 bg-white/90 backdrop-blur-md border-b border-gray-100 z-50 shadow-sm transition-colors">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0 flex items-center">
-              <span className="text-primary font-bold text-xl">CampusMarket</span>
+            <Link to="/" className="flex items-center">
+              <span className="text-pink-600 font-bold text-2xl">CampusMarket</span>
             </Link>
           </div>
 
           {/* Desktop navigation */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link to="/home" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
-              Browse Listings
+          <div className="hidden md:flex items-center space-x-6">
+            <Link to="/home" className="text-gray-700 hover:text-pink-600 text-sm font-medium transition-colors">
+              Browse
             </Link>
             {isLoggedIn ? (
               <>
-                <Link to="/post" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
-                  Post Item
+                <Link to="/post" className="text-gray-700 hover:text-pink-600 text-sm font-medium transition-colors">
+                  Sell
                 </Link>
-                <Link to="/dashboard" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
+                <Link to="/dashboard" className="text-gray-700 hover:text-pink-600 text-sm font-medium transition-colors">
                   Dashboard
                 </Link>
-                <Button variant="outline" className="ml-4" onClick={handleLogout}>
+                <Button variant="outline" className="rounded-full" onClick={handleLogout}>
                   Log Out
                 </Button>
               </>
             ) : (
               <>
                 <Link to="/login">
-                  <Button variant="outline" className="ml-4">
+                  <Button variant="outline" className="rounded-full">
                     Log In
                   </Button>
                 </Link>
                 <Link to="/signup">
-                  <Button className="bg-primary hover:bg-primary/90">
+                  <Button className="bg-pink-600 hover:bg-pink-700 rounded-full shadow-md hover:shadow-lg transition-all">
                     Sign Up
                   </Button>
                 </Link>
@@ -132,7 +132,7 @@ const Navbar = () => {
                   </Button>
                 </Link>
                 <Link to="/signup" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="w-full bg-primary hover:bg-primary/90">
+                  <Button className="w-full bg-pink-600 hover:bg-pink-700 rounded-full">
                     Sign Up
                   </Button>
                 </Link>
