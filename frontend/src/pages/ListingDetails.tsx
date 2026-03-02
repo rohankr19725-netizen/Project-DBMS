@@ -25,7 +25,6 @@ const ListingDetails = () => {
         setListing(res.data);
         const ownerRes = await axios.get(`${API_BASE_URL}/user/${res.data.owner}`);
         setOwner(ownerRes.data);
-        console.log(listing);
       } catch (err) {
         setError(true);
       } finally {
@@ -59,24 +58,6 @@ const ListingDetails = () => {
     );
   }
 
-  if (!listing) {
-    return (
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-1 pt-24">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold mb-4">Listing not found</h2>
-              <Button onClick={() => navigate('/home')}>
-                Return to Listings
-              </Button>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
   const handleSellerClick = () => {
     setOwnerDialogOpen(true);
   };
