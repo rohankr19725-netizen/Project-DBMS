@@ -5,7 +5,7 @@ const Listing=require('../models/listings');
 // Function to connect to MongoDB
 async function main() {
   try {
-    const MONGO_URL = "mongodb://127.0.0.1:27017/CampusMarket";
+    const MONGO_URL = "mongodb+srv://rohankr19725_db_user:BpdLc8QeISLPNnuS@cluster0.dpjvbbl.mongodb.net/?appName=Cluster0";
     await mongoose.connect(MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,

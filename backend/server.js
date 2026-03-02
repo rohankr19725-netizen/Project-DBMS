@@ -29,14 +29,17 @@ const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const cors = require('cors');
 app.use(cors({
-  origin: "http://localhost:8080", // your React frontend port
+  origin: [
+    "http://localhost:8080",  // for local testing
+    "https://project-dbms.vercel.app" // your real Vercel URL
+  ],
   credentials: true
 }));
 
 const wrapAsync = require("./public/util/WrapAsync.js");
 const { Console } = require('console');
 
-const MONGO_URL="mongodb://127.0.0.1:27017/CampusMarket";
+const MONGO_URL="mongodb+srv://rohankr19725_db_user:BpdLc8QeISLPNnuS@cluster0.dpjvbbl.mongodb.net/?appName=Cluster0";
 main().then(()=>{
     console.log("Connected to DB");
 }).catch((err)=> {
