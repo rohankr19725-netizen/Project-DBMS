@@ -11,7 +11,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Pencil, Trash2, Plus } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { truncate } from "fs/promises";
 
 const Dashboard = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);

@@ -49,7 +49,6 @@ app.use(cors({
 }));
 
 const wrapAsync = require("./public/util/WrapAsync.js");
-const { Console } = require('console');
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/CampusMarket";
 main().then(()=>{
@@ -193,29 +192,7 @@ app.get("/protected", (req, res) => {
   }
 });
 
-app.post("/new", async (req, res) => {
-  try {
-    const { title, description, price, category, image } = req.body;
 
-    if (!image || !title || !description || !price || !category) {
-      return res.status(400).json({ message: 'All fields are required including image URL.' });
-    }
-
-    const newListing = new Listing({
-      title,
-      description,
-      price,
-      category,
-      image, 
-    });
-
-    await newListing.save();
-    res.status(201).json(newListing);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Something went wrong' });
-  }
-});
 
 app.post('/marksold/:id', async (req, res) => {
   try {
