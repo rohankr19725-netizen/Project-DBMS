@@ -3,6 +3,7 @@ const app=express();
 const mongoose=require('mongoose');
 const flash=require('connect-flash');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 require('dotenv').config(); // Load environment variables from .env file
 // require schema
 const Listing=require('./models/listings');
@@ -10,8 +11,7 @@ const Listing=require('./models/listings');
 const path=require("path");
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
-// to get the data from url
-app.use(express.urlencoded({extended:true}));
+// Body parsing is configured below with session middleware
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 const upload = require('./public/util/multer');
 // to use post as put method
@@ -48,6 +48,11 @@ app.use(cors({
   credentials: true
 }));
 
+// Required for secure cookies behind Render's reverse proxy
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1);
+}
+
 const wrapAsync = require("./public/util/WrapAsync.js");
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/CampusMarket";
@@ -63,25 +68,28 @@ const sessionOptions={
     secret: process.env.SESSION_SECRET || "BMSCE",
     resave:false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: MONGO_URL,
+      collectionName: "sessions",
+      ttl: 7 * 24 * 60 * 60, // 7 days in seconds
+    }),
     cookie:{
-        expires:Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     },
 };
+
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(session(sessionOptions));
-app.use(express.json()); 
 app.use(passport.initialize());
 app.use(passport.session());
 const LocalStrategy = require('passport-local').Strategy;
 passport.use(new LocalStrategy({ usernameField: 'email' }, User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 app.post("/signup", async (req, res) => {
   const { name, phone, email, password } = req.body;
@@ -114,7 +122,13 @@ app.post("/login", (req, res, next) => {
 
 app.post("/logout", (req, res) => {
   req.logout(() => {
-    res.status(200).json({ message: "Logged out successfully" });
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Logout failed" });
+      }
+      res.clearCookie("connect.sid");
+      res.status(200).json({ message: "Logged out successfully" });
+    });
   });
 });
 
