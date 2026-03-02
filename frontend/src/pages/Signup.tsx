@@ -48,7 +48,7 @@ const Signup = () => {
       });
 
       toast.success("Account created successfully!");
-      navigate("/home");
+      navigate("/dashboard");
     } catch (error: any) {
       toast.error(error?.response?.data?.message || "Signup failed");
     } finally {

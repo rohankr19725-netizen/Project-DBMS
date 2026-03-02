@@ -88,15 +88,28 @@ app.post("/signup", async (req, res) => {
   const newUser = new User({ name, phone, email });
   try {
     const registeredUser = await User.register(newUser, password);
-    res.status(201).json({ message: "User registered", user: registeredUser });
+    // Auto-login after signup
+    req.login(registeredUser, (err) => {
+      if (err) {
+        return res.status(500).json({ message: "Registered but auto-login failed" });
+      }
+      return res.status(201).json({ message: "User registered", user: registeredUser });
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
 
-app.post("/login", passport.authenticate('local'), (req, res) => {
-    res.status(200).json({ message: "Login successful", user: req.user });
+app.post("/login", (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return res.status(500).json({ message: "Server error" });
+    if (!user) return res.status(401).json({ message: info?.message || "Invalid email or password" });
+    req.login(user, (err) => {
+      if (err) return res.status(500).json({ message: "Login failed" });
+      return res.status(200).json({ message: "Login successful", user: req.user });
+    });
+  })(req, res, next);
 });
 
 app.post("/logout", (req, res) => {
