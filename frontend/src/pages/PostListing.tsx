@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Upload, X } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "@/lib/api";
 
 const PostListing = () => {
   const [title, setTitle] = useState("");
@@ -75,7 +76,7 @@ const PostListing = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/new", {
+      const response = await fetch(`${API_BASE_URL}/new`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import API_BASE_URL from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/protected", {
+        const res = await axios.get(`${API_BASE_URL}/protected`, {
           withCredentials: true,
         });
         setUser(res.data);
@@ -46,7 +47,7 @@ const Dashboard = () => {
 
     const fetchListings = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/mylistings", {
+        const res = await axios.get(`${API_BASE_URL}/mylistings`, {
           withCredentials: true,
         });
         setListings(res.data);
@@ -61,7 +62,7 @@ const Dashboard = () => {
   const handleMarkSold = async (id: string) => {
     if (!id) return;
     try {
-      await axios.post(`http://localhost:5000/marksold/${id}`, {}, {
+      await axios.post(`${API_BASE_URL}/marksold/${id}`, {}, {
         withCredentials: true,
       });
       toast.success("Listing Marked Sold successfully");
@@ -84,7 +85,7 @@ const Dashboard = () => {
     if (!itemToDelete) return;
     setIsDeleting(true);
     try {
-      await axios.delete(`http://localhost:5000/listing/${itemToDelete}`, {
+      await axios.delete(`${API_BASE_URL}/listing/${itemToDelete}`, {
         withCredentials: true,
       });
       toast.success("Listing deleted successfully");

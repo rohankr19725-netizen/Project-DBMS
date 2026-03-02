@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "@/lib/api";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ListingCard from "@/components/ListingCard";
@@ -17,7 +18,7 @@ const Home = () => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/listings"); // adjust your backend URL
+        const res = await axios.get(`${API_BASE_URL}/listings`);
         setListings(res.data); // expecting an array of listings
       } catch (error) {
         console.error("Error fetching listings:", error);

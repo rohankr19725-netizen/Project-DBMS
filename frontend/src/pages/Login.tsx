@@ -1,5 +1,6 @@
 import axios from "axios"; 
 import React, { useState } from "react";
+import API_BASE_URL from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -37,7 +38,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/login",
+        `${API_BASE_URL}/login`,
         { email, password },
         { withCredentials: true }
       );

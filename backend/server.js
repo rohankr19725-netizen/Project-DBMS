@@ -28,18 +28,30 @@ const User = require('./models/User.js');
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const cors = require('cors');
+
+// Production-safe CORS configuration
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:8080",
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
 app.use(cors({
-  origin: [
-    "http://localhost:8080",  // for local testing
-    "https://project-dbms.vercel.app" // your real Vercel URL
-  ],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Not allowed by CORS"));
+  },
   credentials: true
 }));
 
 const wrapAsync = require("./public/util/WrapAsync.js");
 const { Console } = require('console');
 
-const MONGO_URL="mongodb+srv://rohankr19725_db_user:BpdLc8QeISLPNnuS@cluster0.dpjvbbl.mongodb.net/?appName=Cluster0";
+const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/CampusMarket";
 main().then(()=>{
     console.log("Connected to DB");
 }).catch((err)=> {
@@ -49,14 +61,15 @@ async function main() {
     await mongoose.connect(MONGO_URL);
 }
 const sessionOptions={
-    secret:"BMSCE",
+    secret: process.env.SESSION_SECRET || "BMSCE",
     resave:false,
-    saveUninitialized: true,
-    Cookie:{
+    saveUninitialized: false,
+    cookie:{
         expires:Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly:true,
-        
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     },
 };
 app.use(session(sessionOptions));
@@ -227,6 +240,7 @@ app.delete('/listing/:id', async (req, res) => {
 });
 
 
-app.listen(5000,()=>{
-    console.log("server is running");
-})
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
