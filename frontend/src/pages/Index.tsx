@@ -2,8 +2,9 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
+import ScrollToTop from "@/components/ScrollToTop";
 import { Card } from "@/components/ui/card";
-import { Book, Upload, ShoppingCart } from "lucide-react";
+import { Book, Upload, ShoppingCart, TrendingUp, Zap, Shield } from "lucide-react";
 
 const Index = () => {
   return (
@@ -13,40 +14,41 @@ const Index = () => {
         <Hero />
         
         {/* How It Works */}
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-16 bg-white/80 backdrop-blur-sm relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-gray-900">How It Works</h2>
-              <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-                CampusMarket makes buying and selling items within your campus simple, safe, and convenient.
+              <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+                Simple, fast, and convenient campus marketplace
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="flex flex-col items-center text-center">
-                <div className="bg-muted rounded-full p-4 mb-4">
-                  <Upload className="h-8 w-8 text-primary" />
+              <div className="text-center group">
+                <div className="bg-pink-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <Upload className="h-10 w-10 text-pink-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Post Your Item</h3>
-                <p className="text-gray-600">
-                  Take a photo, add a description, set your price, and list it on the marketplace.
+                <h3 className="text-xl font-semibold mb-2 text-gray-900">List Your Item</h3>
+                <p className="text-sm text-gray-600">
+                  Upload photos and set your price in seconds
                 </p>
               </div>
-              <div className="flex flex-col items-center text-center">
-                <div className="bg-muted rounded-full p-4 mb-4">
-                  <ShoppingCart className="h-8 w-8 text-primary" />
+              <div className="text-center group">
+                <div className="bg-yellow-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <ShoppingCart className="h-10 w-10 text-yellow-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Connect with Buyers</h3>
-                <p className="text-gray-600">
-                  Interested students will contact you to purchase your item.
+                <h3 className="text-xl font-semibold mb-2 text-gray-900">Connect Instantly</h3>
+                <p className="text-sm text-gray-600">
+                  Students reach out to buy your items
                 </p>
               </div>
-              <div className="flex flex-col items-center text-center">
-                <div className="bg-muted rounded-full p-4 mb-4">
-                  <Book className="h-8 w-8 text-primary" />
+              <div className="text-center group">
+                <div className="bg-blue-50 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <Book className="h-10 w-10 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">Meet on Campus</h3>
-                <p className="text-gray-600">
-                  Arrange a safe meeting place on campus to complete the transaction.
+                <h3 className="text-xl font-semibold mb-2 text-gray-900">Meet on Campus</h3>
+                <p className="text-sm text-gray-600">
+                  Safe, quick exchanges right on campus
                 </p>
               </div>
             </div>
@@ -54,29 +56,31 @@ const Index = () => {
         </section>
         
         {/* Featured Categories */}
-        <section className="py-16 bg-muted">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-16 bg-gradient-to-br from-purple-50 to-pink-50 relative overflow-hidden">
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow" style={{animationDelay: '1s'}}></div>
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900">Popular Categories</h2>
-              <p className="mt-4 text-xl text-gray-600">
-                Browse our most popular categories to find what you need.
+              <h2 className="text-3xl font-bold text-gray-900">Shop by Category</h2>
+              <p className="mt-3 text-gray-600">
+                Find exactly what you need 🔍
               </p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { name: "Textbooks", image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=1740" },
-                { name: "Electronics", image: "https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&q=80&w=1740" },
-                { name: "Furniture", image: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=1470" },
-                { name: "Clothing", image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=1470" }
+                { name: "Textbooks", image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=1740", emoji: "📚" },
+                { name: "Electronics", image: "https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&q=80&w=1740", emoji: "💻" },
+                { name: "Furniture", image: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&q=80&w=1470", emoji: "🛋️" },
+                { name: "Clothing", image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=1470", emoji: "👕" }
               ].map((category, index) => (
-                <Card key={index} className="overflow-hidden group relative h-48">
+                <Card key={index} className="overflow-hidden group relative h-48 rounded-2xl border border-gray-100 hover:shadow-lg transition-all duration-300 cursor-pointer bg-white hover:scale-105">
                   <img
                     src={category.image}
                     alt={category.name}
-                    className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity group-hover:bg-opacity-50">
-                    <h3 className="text-white font-semibold text-xl">{category.name}</h3>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col items-center justify-end pb-5">
+                    <span className="text-3xl mb-2 group-hover:scale-125 transition-transform">{category.emoji}</span>
+                    <h3 className="text-white font-semibold text-lg">{category.name}</h3>
                   </div>
                 </Card>
               ))}
@@ -85,37 +89,42 @@ const Index = () => {
         </section>
         
         {/* Trust Section */}
-        <section className="py-16 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-16 bg-white/80 backdrop-blur-sm relative overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow" style={{animationDelay: '2s'}}></div>
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900">Safe Campus Trading</h2>
-              <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-                We prioritize safety and convenience when buying and selling within your campus community.
+              <h2 className="text-3xl font-bold text-gray-900">Why Choose Us</h2>
+              <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
+                Safe, fast, and trusted by students
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-muted rounded-lg p-6">
-                <h3 className="font-semibold text-xl mb-3">Campus Verified</h3>
-                <p className="text-gray-600">
-                  All users are verified students from your campus, creating a safer, more trusted community.
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <div className="text-3xl mb-3">✅</div>
+                <h3 className="font-semibold text-lg mb-2 text-gray-900">Campus Verified</h3>
+                <p className="text-sm text-gray-600">
+                  All users are verified students from your campus
                 </p>
               </div>
-              <div className="bg-muted rounded-lg p-6">
-                <h3 className="font-semibold text-xl mb-3">Face-to-Face Exchange</h3>
-                <p className="text-gray-600">
-                  Meet in person on campus to complete transactions, eliminating shipping hassles.
+              <div className="bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <div className="text-3xl mb-3">🤝</div>
+                <h3 className="font-semibold text-lg mb-2 text-gray-900">Quick Exchange</h3>
+                <p className="text-sm text-gray-600">
+                  Meet in person on campus, no shipping needed
                 </p>
               </div>
-              <div className="bg-muted rounded-lg p-6">
-                <h3 className="font-semibold text-xl mb-3">Stay in Touch</h3>
-                <p className="text-gray-600">
-                  Our platform helps you communicate with buyers and sellers safely and efficiently.
+              <div className="bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all">
+                <div className="text-3xl mb-3">💬</div>
+                <h3 className="font-semibold text-lg mb-2 text-gray-900">Easy Communication</h3>
+                <p className="text-sm text-gray-600">
+                  Connect with buyers and sellers instantly
                 </p>
               </div>
             </div>
           </div>
         </section>
       </main>
+      <ScrollToTop />
       <Footer />
     </div>
   );
