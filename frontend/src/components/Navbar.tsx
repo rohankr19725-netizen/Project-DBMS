@@ -1,34 +1,17 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import API_BASE_URL from "@/lib/api";
-
-axios.defaults.withCredentials = true; // important for session cookies
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // track login
+  const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
-  // Check if the user is logged in
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await axios.get(`${API_BASE_URL}/check-auth`);
-        setIsLoggedIn(res.data.isAuthenticated);
-      } catch (err) {
-        console.error("Auth check failed", err);
-      }
-    };
-    checkAuth();
-  }, []);
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${API_BASE_URL}/logout`);
-      setIsLoggedIn(false);
+      await logout();
       navigate("/");
     } catch (err) {
       console.error("Logout failed", err);
@@ -50,7 +33,7 @@ const Navbar = () => {
             <Link to="/home" className="text-gray-700 hover:text-pink-600 text-sm font-medium transition-colors">
               Browse
             </Link>
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <>
                 <Link to="/post" className="text-gray-700 hover:text-pink-600 text-sm font-medium transition-colors">
                   Sell
@@ -102,7 +85,7 @@ const Navbar = () => {
             >
               Browse Listings
             </Link>
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <>
                 <Link
                   to="/post"

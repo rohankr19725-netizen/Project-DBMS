@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import API_BASE_URL from "@/lib/api";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +17,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { signup } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,16 +39,7 @@ const Signup = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post(`${API_BASE_URL}/signup`, {
-        name,
-        username,
-        phone,
-        email,
-        password,
-      }, {
-        withCredentials: true,
-      });
-
+      await signup({ name, phone, email, password });
       toast.success("Account created successfully!");
       navigate("/dashboard");
     } catch (error: any) {

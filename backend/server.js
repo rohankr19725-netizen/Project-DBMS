@@ -152,6 +152,14 @@ app.get('/check-auth', (req, res) => {
   }
 });
 
+// /me route — returns current logged-in user (used by AuthContext)
+app.get('/me', (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.json(req.user);
+  }
+  return res.status(401).json({ message: "Not authenticated" });
+});
+
 
 app.get("/listings", async (req, res) => {
   try {

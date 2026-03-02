@@ -1,6 +1,7 @@
 import axios from "axios"; 
 import React, { useState } from "react";
 import API_BASE_URL from "@/lib/api";
+import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +17,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,12 +39,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post(
-        `${API_BASE_URL}/login`,
-        { email, password },
-        { withCredentials: true }
-      );
-
+      await login(email, password);
       toast.success("Login successful!");
       navigate("/dashboard");
     } catch (err: any) {
