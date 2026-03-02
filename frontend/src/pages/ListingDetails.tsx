@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import API_BASE_URL from "@/lib/api";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -20,9 +21,9 @@ const ListingDetails = () => {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/listing/${id}`);
+        const res = await axios.get(`${API_BASE_URL}/listing/${id}`);
         setListing(res.data);
-        const ownerRes = await axios.get(`http://localhost:5000/user/${res.data.owner}`);
+        const ownerRes = await axios.get(`${API_BASE_URL}/user/${res.data.owner}`);
         setOwner(ownerRes.data);
         console.log(listing);
       } catch (err) {

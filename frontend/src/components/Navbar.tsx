@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "@/lib/api";
 
 axios.defaults.withCredentials = true; // important for session cookies
 
@@ -15,7 +16,7 @@ const Navbar = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/check-auth");
+        const res = await axios.get(`${API_BASE_URL}/check-auth`);
         setIsLoggedIn(res.data.isAuthenticated);
       } catch (err) {
         console.error("Auth check failed", err);
@@ -26,7 +27,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:5000/logout"); // backend logout route
+      await axios.post(`${API_BASE_URL}/logout`);
       setIsLoggedIn(false);
       navigate("/");
     } catch (err) {

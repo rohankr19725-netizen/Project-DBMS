@@ -1,15 +1,13 @@
 const mongoose = require("mongoose");
+require('dotenv').config();
 const initdata = require("./data.js");
 const Listing=require('../models/listings');
 
 // Function to connect to MongoDB
 async function main() {
   try {
-    const MONGO_URL = "mongodb+srv://rohankr19725_db_user:BpdLc8QeISLPNnuS@cluster0.dpjvbbl.mongodb.net/?appName=Cluster0";
-    await mongoose.connect(MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/CampusMarket";
+    await mongoose.connect(MONGO_URL);
     console.log("Connected to DB");
   } catch (err) {
     console.error("Database connection error:", err);
