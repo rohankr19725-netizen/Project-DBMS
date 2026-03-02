@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import API_BASE_URL from "@/lib/api";
+import { useAuth } from "@/contexts/AuthContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -16,30 +17,10 @@ const Dashboard = () => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("active");
-  const [user, setUser] = useState(null);
+  const { user } = useAuth();
   const [listings, setListings] = useState([]);
   const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
-
-
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await axios.get(`${API_BASE_URL}/protected`, {
-          withCredentials: true,
-        });
-        setUser(res.data);
-      } catch (err) {
-        toast.error("Please log in again");
-        navigate("/login");
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-
 
   useEffect(() => {
     if (!user) return;
