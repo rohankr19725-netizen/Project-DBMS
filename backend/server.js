@@ -101,7 +101,13 @@ app.post("/signup", async (req, res) => {
       if (err) {
         return res.status(500).json({ message: "Registered but auto-login failed" });
       }
-      return res.status(201).json({ message: "User registered", user: registeredUser });
+      // Ensure session is saved to MongoDB before responding
+      req.session.save((err) => {
+        if (err) {
+          return res.status(500).json({ message: "Session save failed" });
+        }
+        return res.status(201).json({ message: "User registered", user: registeredUser });
+      });
     });
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -115,7 +121,11 @@ app.post("/login", (req, res, next) => {
     if (!user) return res.status(401).json({ message: info?.message || "Invalid email or password" });
     req.login(user, (err) => {
       if (err) return res.status(500).json({ message: "Login failed" });
-      return res.status(200).json({ message: "Login successful", user: req.user });
+      // Ensure session is saved to MongoDB before responding
+      req.session.save((err) => {
+        if (err) return res.status(500).json({ message: "Session save failed" });
+        return res.status(200).json({ message: "Login successful", user: req.user });
+      });
     });
   })(req, res, next);
 });
