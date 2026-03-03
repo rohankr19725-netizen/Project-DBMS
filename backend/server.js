@@ -224,11 +224,15 @@ app.use((err, req, res, _next) => {
 // ─── Start server only after MongoDB connects ──────────────────────────────
 const PORT = process.env.PORT || 5000;
 
+console.log(`⚙️   PORT        = ${PORT}`);
+console.log(`⚙️   NODE_ENV    = ${process.env.NODE_ENV || "development"}`);
+console.log(`⚙️   FRONTEND_URL= ${process.env.FRONTEND_URL ? "✔ defined" : "✖ NOT defined"}`);
+
 mongoose
   .connect(MONGO_URL)
   .then(() => {
     console.log("✅  Connected to MongoDB");
-    app.listen(PORT, () => {
+    app.listen(PORT, "0.0.0.0", () => {
       console.log(`🚀  Server is running on port ${PORT}`);
     });
   })
